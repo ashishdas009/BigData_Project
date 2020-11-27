@@ -1,0 +1,16 @@
+### Here are the milestones for tthe students
+
+Week 1:
+- Gather datasets
+- Create deployment architecture
+- Build baseline Data Gathering / ETL process
+- Deploy this process
+
+
+
+Week 2:
+
+- Write summary of findings
+- Write final report
+- Add additional model
+- Discuss future work
