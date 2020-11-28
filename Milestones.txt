@@ -4,6 +4,7 @@ impact of Covid-19 in NYC with the help of Taxi and Restaurant datasets in the c
 First part:
 ===========
 S & P 500 v/s global/US covid cases/deaths
+Clustering the S & P 500 companies according to their industry and observing the trend of those industries vs global/US covid cases/deaths
 Cryptocurrency rates v/s global/US covid cases/deaths
 Currencies vs global/US covid cases/deaths
 Unemployment rate vs US covid/deaths
