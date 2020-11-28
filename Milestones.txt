@@ -6,8 +6,6 @@ First part:
 S & P 500 v/s global/US covid cases/deaths
 Cryptocurrency rates v/s global/US covid cases/deaths
 Currencies vs global/US covid cases/deaths
-Metals vs global/US covid cases/deaths
-Energy vs global/US covid cases/deaths
 Unemployment rate vs US covid/deaths
 Largest fall plots of S&P 500 companies
 
