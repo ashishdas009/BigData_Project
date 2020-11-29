@@ -26,3 +26,15 @@ Ashish and Rishikesh will complete the first part of the project of the project 
 infrastructure implementation on AWS in the first week. The second part of the project will be completed by the second week as well as the paper and presentation.
 
 
+First part:
+-------------
+EDA:
+-----
+Covid cases/deaths global and US - DONE
+Cryptocurrency - DONE
+Currency - DONE
+Unemployment -
+S&P - 
+
+
+
