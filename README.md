@@ -19,3 +19,45 @@ Though the crash began on 20 February, selling was intensified during the first 
 The first case of COVID-19 in the U.S. state of New York during the pandemic was confirmed on March 1, 2020, and the state quickly became an epicenter of the pandemic, with a record 12,274 new cases reported on April 4 and approximately 29,000 more deaths reported for the month of April than the same month in 2019. By April 10, New York had more confirmed cases than any other country besides its own, but since then the outbreak has been mostly controlled in the state. As of December 8, 2020, the state has reported 21.1 million tests, with 733,064 positive cases, and 27,307 deaths.[9]
 
 Given these facts, our project aims to understand the various transitions that took place in small and large companies. We analyse various factors such as number of visits by pedestrian visitors to a business or commercial site, closing values for S&P 500 companies, transitions made by the restaurants and transportation industry in NYC, unemployment rates in the US, and prices of cryptocurrencies.
+
+
+
+## DataSets
+
+[Wikipedia page for covid-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic)
+
+[Covid-19 lockdown information from business insider](https://www.businessinsider.com.au/countries-on-lockdown-coronavirus-italy-2020-3)
+
+[Effect of coronavirus on global stocks from CNBC](https://www.cnbc.com/2020/02/28/europe-markets-coronavirus-hammers-global-stocks.html)
+
+[Dow futures fall by 100 points due to covid](https://www.cnbc.com/2020/02/27/dow-futures-fall-100-points-after-another-massive-rout-amid-coronavirus-fears.html)
+
+[CNBC report on the effects of Covid on Asian and North American markets](https://www.cnbc.com/2020/03/16/asia-markets-fed-cut-to-zero-china-industrial-production-coronavirus.html)
+
+[Coronavirus fears see Australian market slump to start new week](https://www.abc.net.au/news/2020-03-16/coronavirus-fears-see-australian-market-slump-to-start-new-week/12058904)
+
+[Global shares plunge in worst day since financial crisis from BBC](https://www.bbc.com/news/business-51796806)
+
+[Dow futures tumble as Saudi-Russia oil price war adds to coronavirus stress](https://www.nbcnews.com/business/business-news/dow-futures-tumble-1-000-points-all-out-oil-price-n1152716)
+
+[New York State Department of Health COVID-19 Tracker](https://coronavirus.health.ny.gov/home)
+
+[2020 Yellow Taxi Trip Data (January - June](https://catalog.data.gov/my/dataset/2020-yellow-taxi-trip-data-january-june)
+
+[Open restaurant applications dataset](https://catalog.data.gov/dataset/open-restaurant)
+
+[Google mobility report dataset](https://www.google.com/covid19/mobility/)
+
+[COVID-19 dataset from Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19)
+
+[Unemployment data from Bureau of Labor Statistics](https://www.bls.gov/news.release/pdf/empsit.pdf)
+
+[Yahoo finance website](https://finance.yahoo.com/)
+
+[NASDAQ cryptocurrencies dataset](https://www.nasdaq.com/market-activity/cryptocurrency)
+
+[NASDAQ currencies dataset](https://www.nasdaq.com/market-activity/currencies)
+
+[Google mobility report dataset](https://www.google.com/covid19/mobility/)
+
+[COVID-19 and the United States financial markets' volatility](https://www.sciencedirect.com/science/article/pii/S1544612320303202)
