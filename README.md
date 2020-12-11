@@ -20,7 +20,27 @@ The first case of COVID-19 in the U.S. state of New York during the pandemic was
 
 Given these facts, our project aims to understand the various transitions that took place in small and large companies. We analyse various factors such as number of visits by pedestrian visitors to a business or commercial site, closing values for S&P 500 companies, transitions made by the restaurants and transportation industry in NYC, unemployment rates in the US, and prices of cryptocurrencies.
 
+## Illustrations
 
+These are some insights we found during our exploratory analysis to obtain in-depth insights of the effects of Covid-19 on the US economy and NYC.
+
+This stark example shows how the foot traffic in NYC declined heavily during covid-19.
+
+<img src="media/manhattan_foot_traffic.png" alt="manhattan_foot_traffic" style="zoom:75%;" />
+
+This shows how a cluster of companies' stock was doing poorly before covid-19 and fared better during the pandemic.
+
+<img src="media/switch_from_one.png" alt="switch_from_one" style="zoom:50%;" />
+
+While some companies in the travel sector declined, others were able to at least continue their performance from pre-covid.
+
+<img src="media/travel.png" alt="travel" style="zoom:75%;" />
+
+
+
+Here, we used TSNE to visualize clusters of high-dimensional temporal data of company stock behavior over time.
+
+<img src="media/kmeans_3clusters.png" alt="kmeans_3clusters" style="zoom:67%;" />
 
 ## DataSets
 
