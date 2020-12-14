@@ -1,17 +1,5 @@
 version: 0.2
-# Buildspec Reference Doc: https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#build-spec-ref-syntax
 
-#################################
-# Runtime Environment Variables #
-#################################
-
-# env:
-#   variables:
-#     key: "value"
-#     key: "value"
-#   parameter-store:
-#     key: "value"
-#     key: "value"
 
 phases:
   install:

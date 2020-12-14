@@ -47,8 +47,8 @@ def lambda_handler(event, context):
             },
         ],
         VisibleToAllUsers=True,
-        JobFlowRole = 'EMR_EC2_DefaultRole',     #'EMRLambda-EMREC2InstanceProfile-XXXXXXXXX',
-        ServiceRole = 'EMR_DefaultRole',     #'EMRLambda-EMRRole-XXXXXXXXX',
+        JobFlowRole = 'EMR_EC2_DefaultRole', 
+        ServiceRole = 'EMR_DefaultRole',     
         Steps=[
             {
                 'Name': 'flow-log-analysis',
@@ -56,16 +56,6 @@ def lambda_handler(event, context):
                 'HadoopJarStep': {
                         'Jar': 'command-runner.jar',
                         'Args': [ 'state-pusher-script' ]
-                        #     'spark-submit',
-                        #     '--deploy-mode', 'cluster',
-                        #     '--executor-memory', '6G',
-                        #     '--num-executors', '1',
-                        #     '--executor-cores', '2',
-                        #     '--class', 'com.aws.emr.ProfitCalc',
-                        #     's3://big-data-class1/prefix/lamba-emr/SparkProfitCalc.jar',
-                        #     's3://your-bucket-name/prefix/fake_sales_data.csv',
-                        #     's3://your-bucket-name/prefix/outputs/report_1/'
-                        # ]
                 }
             },
             {

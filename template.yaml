@@ -5,7 +5,7 @@ Description: >
 
   Sample SAM Template for serverless-data-pipelines
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+
 Globals:
   Function:
     Timeout: 100
