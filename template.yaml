@@ -18,6 +18,7 @@ Resources:
       CodeUri: emr-1/
       Handler: app.lambda_handler
       Runtime: python3.7
+      MemorySize: 1024
       # Layers:
       # - !Ref DataProcessingLayer
 
@@ -30,6 +31,7 @@ Resources:
       CodeUri: get-data/
       Handler: app.lambda_handler
       Runtime: python3.7
+      MemorySize: 1024
       # Layers: -- Can't build this without sam
       # - !Ref DataProcessingLayer
       Events:
