@@ -16,8 +16,8 @@ version: 0.2
 phases:
   install:
     commands:
-      # - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
-      # - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
 
 
       # Codebuild Service Role requires access to AWS ECR Container Service
@@ -37,24 +37,27 @@ phases:
       # We package the SAM template and create `packaged.yaml` file that will be used in our pipeline for deployment
       ## Here we separate Build from Deployment and segregate permissions for different steps
 
-      # - echo "Starting SAM packaging `date` in `pwd`"
 
-      # - pip install --user aws-sam-cli
-      # - USER_BASE_PATH=$(python -m site --user-base)
-      # - export PATH=$PATH:$USER_BASE_PATH/bin
+
+
+      - echo "Starting SAM packaging `date` in `pwd`"
+
+      - pip install --user aws-sam-cli
+      - USER_BASE_PATH=$(python -m site --user-base)
+      - export PATH=$PATH:$USER_BASE_PATH/bin
       - echo "Before Build---"
 
-      # - ls -lart
-      # - sam build --use-container --template-file template.yaml
-      # - ls -lart
-      # - ls -lart .aws-sam
+      - ls -lart
+      - sam build --use-container --template-file template.yaml
+      - ls -lart
+      - ls -lart .aws-sam
       # to be very specific -- although this is whole point of SAM
-      # - sam package --template-file .aws-sam/build/template.yaml --s3-bucket $BUILD_OUTPUT_BUCKET --output-template-file packaged.yaml
+      - sam package --template-file .aws-sam/build/template.yaml --s3-bucket $BUILD_OUTPUT_BUCKET --output-template-file packaged.yaml
 
 
 
       # Just build without docker for now
-      - aws cloudformation package --template-file template.yaml --s3-bucket $BUILD_OUTPUT_BUCKET --output-template-file packaged.yaml
+      # - aws cloudformation package --template-file template.yaml --s3-bucket $BUILD_OUTPUT_BUCKET --output-template-file packaged.yaml
   post_build:
     commands:
       # Use Post Build for notifications, git tags and any further customization after build
