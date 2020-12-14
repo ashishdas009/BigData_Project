@@ -109,7 +109,7 @@ Resources:
 
 
 
-  # DataProcessingLib:
+  DataProcessingLib:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./src-infra/layers/dataProcessingLib/
