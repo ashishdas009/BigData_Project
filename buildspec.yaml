@@ -48,7 +48,7 @@ phases:
       - echo "Before Build---"
 
       - ls -lart
-      - sam build --template-file template.yaml # --use-container
+      - sam build --use-container --template-file template.yaml # 
       - ls -lart
       - ls -lart .aws-sam
       # # to be very specific -- although this is whole point of SAM
