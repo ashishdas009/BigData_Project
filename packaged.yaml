@@ -8,41 +8,81 @@ Description: 'serverless-data-pipelines
 Globals:
   Function:
     Timeout: 100
+Parameters:
+  MainDataBucket:
+    Type: String
+    Default: big-data-class1
+  MainDataBucketArn:
+    Type: String
+    Default: arn:aws:s3:::big-data-class1
 Resources:
+  LambaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: LambaExecutionPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - s3:ListBucket
+            Resource:
+              Ref: MainDataBucketArn
+          - Effect: Allow
+            Action:
+            - s3:PutObject
+            - s3:GetObject
+            - s3:ListBucket
+            Resource:
+              Fn::Join:
+              - /
+              - - Ref: MainDataBucketArn
+                - '*'
+          - Effect: Allow
+            Action:
+            - cloudwatch:PutMetricData
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            - logs:CreateLogGroup
+            - logs:DescribeLogStreams
+            Resource: '*'
   EMRFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: EMRFunction
-      CodeUri: s3://big-data-class1/5a8553d517b087278d73ea3876202e62
+      CodeUri: s3://big-data-class1/fea49c04ae6c7a5dca4ee4f00a50e6ef
       Handler: app.lambda_handler
       Runtime: python3.7
-      Layers:
-      - Ref: DataProcessingLayer
+      Role:
+        Fn::GetAtt:
+        - LambaExecutionRole
+        - Arn
+      MemorySize: 1024
   GetDataFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: GetDataFunction
-      CodeUri: s3://big-data-class1/5a8553d517b087278d73ea3876202e62
+      CodeUri: s3://big-data-class1/bc5a87935ef25220bfa9bf2422c41a9d
       Handler: app.lambda_handler
       Runtime: python3.7
-      Layers:
-      - Ref: DataProcessingLayer
-  DataProcessingLib:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: s3://big-data-class1/619072790f07d32c57cfb9e66a7d2f05
-      Handler: data_processing_lib.lambda_handler
-      Runtime: python3.7
-  DataProcessingLayer:
-    Type: AWS::Serverless::LayerVersion
-    DependsOn: DataProcessingLib
-    Properties:
-      Description: Lambda layer for writing additional functions for data processing
-      LayerName: DataProcessingLib
-      ContentUri: s3://big-data-class1/619072790f07d32c57cfb9e66a7d2f05
-      CompatibleRuntimes:
-      - python3.7
-      RetentionPolicy: Delete
+      Role:
+        Fn::GetAtt:
+        - LambaExecutionRole
+        - Arn
+      MemorySize: 1024
+      Events:
+        Schedule1:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
 Outputs:
   EMRFunction:
     Description: None
@@ -50,27 +90,9 @@ Outputs:
       Fn::GetAtt:
       - EMRFunction
       - Arn
-  EMRFunctionIamRole:
-    Description: None
-    Value:
-      Fn::GetAtt:
-      - EMRFunctionRole
-      - Arn
   GetDataFunction:
     Description: None
     Value:
       Fn::GetAtt:
       - GetDataFunction
-      - Arn
-  GetDataFunctionIamRole:
-    Description: None
-    Value:
-      Fn::GetAtt:
-      - GetDataFunctionRole
-      - Arn
-  DataProcessingLib:
-    Description: Processing Layer
-    Value:
-      Fn::GetAtt:
-      - DataProcessingLib
       - Arn

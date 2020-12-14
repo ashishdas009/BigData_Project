@@ -10,7 +10,54 @@ Globals:
   Function:
     Timeout: 100
 
+Parameters:
+  MainDataBucket:
+    Type: String
+    Default: 'big-data-class1'
+  MainDataBucketArn:
+    Type: String
+    Default: 'arn:aws:s3:::big-data-class1'
+
+# has s3 access
 Resources:
+
+  LambaExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: LambaExecutionPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                Resource: !Ref MainDataBucketArn
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:ListBucket
+                Resource: !Join ["/", [!Ref MainDataBucketArn, "*"]]
+              - Effect: Allow
+                Action:
+                - cloudwatch:PutMetricData
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                - logs:CreateLogGroup
+                - logs:DescribeLogStreams
+                Resource: "*"
+
+
+
+
   EMRFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -18,22 +65,23 @@ Resources:
       CodeUri: emr-1/
       Handler: app.lambda_handler
       Runtime: python3.7
+      Role: !GetAtt [ LambaExecutionRole, Arn ]
       MemorySize: 1024
       # Layers:
       # - !Ref DataProcessingLayer
-      Events: # new s3 trigger
-        S3Event:
-          Type: S3
-          Properties:
-            SourceArn: !Sub: arn:aws:s3:::big-data-class1
-            Events: s3:ObjectCreated:Put
-            Filter:
-              S3Key:
-                Rules:
-                  - Name: prefix
-                    Value: batch-job/
-                  - Name: suffix
-                    Value: .csv
+      # Events: # new s3 trigger
+      #   S3Event:
+      #     Type: S3
+      #     Properties:
+      #       Bucket: !Ref MainDataBucket
+      #       Events: s3:ObjectCreated:Put
+      #       Filter:
+      #         S3Key:
+      #           Rules:
+      #             - Name: prefix
+      #               Value: batch-job/
+      #             - Name: suffix
+      #               Value: .csv
 
 
   # note, role requires s3 access
@@ -44,6 +92,7 @@ Resources:
       CodeUri: get-data/
       Handler: app.lambda_handler
       Runtime: python3.7
+      Role: !GetAtt [ LambaExecutionRole, Arn ]
       MemorySize: 1024
       # Layers: -- Can't build this without sam
       # - !Ref DataProcessingLayer
@@ -52,6 +101,8 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: rate(1 day)
+
+
 
 
 
@@ -81,17 +132,17 @@ Outputs:
   EMRFunction:
     Description: "None"
     Value: !GetAtt EMRFunction.Arn
-  EMRFunctionIamRole:
-    Description: "None"
-    Value: !GetAtt EMRFunctionRole.Arn
+  # EMRFunctionIamRole:
+  #   Description: "None"
+  #   Value: !GetAtt EMRFunctionRole.Arn
 
 
   GetDataFunction:
     Description: "None"
     Value: !GetAtt GetDataFunction.Arn
-  GetDataFunctionIamRole:
-    Description: "None"
-    Value: !GetAtt GetDataFunctionRole.Arn
+  # GetDataFunctionIamRole:
+  #   Description: "None"
+  #   Value: !GetAtt GetDataFunctionRole.Arn
 
 
   # DataProcessingLib:
