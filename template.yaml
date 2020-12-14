@@ -110,23 +110,23 @@ Resources:
 
 
   # DataProcessingLib:
-  #   Type: AWS::Serverless::Function
-  #   Properties:
-  #     CodeUri: ./src/layers/dataProcessingLib/
-  #     Handler: data_processing_lib.lambda_handler
-  #     Runtime: python3.7
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src-infra/layers/dataProcessingLib/
+      Handler: data_processing_lib.lambda_handler
+      Runtime: python3.7
 
 
-  # DataProcessingLayer:
-  #   Type: AWS::Serverless::LayerVersion
-  #   DependsOn: DataProcessingLib
-  #   Properties:
-  #     Description: Lambda layer for writing additional functions for data processing
-  #     LayerName: DataProcessingLib
-  #     ContentUri: ./.aws-sam/build/DataProcessingLib
-  #     CompatibleRuntimes: 
-  #       - python3.7
-  #     RetentionPolicy: Delete
+  DataProcessingLayer:
+    Type: AWS::Serverless::LayerVersion
+    DependsOn: DataProcessingLib
+    Properties:
+      Description: Lambda layer for writing additional functions for data processing
+      LayerName: DataProcessingLib
+      ContentUri: ./.aws-sam/build/DataProcessingLib
+      CompatibleRuntimes: 
+        - python3.7
+      RetentionPolicy: Delete
 
 Outputs:
   
@@ -147,6 +147,6 @@ Outputs:
   #   Value: !GetAtt GetDataFunctionRole.Arn
 
 
-  # DataProcessingLib:
-  #   Description: "Processing Layer"
-  #   Value: !GetAtt DataProcessingLib.Arn
+  DataProcessingLib:
+    Description: "Processing Layer"
+    Value: !GetAtt DataProcessingLib.Arn

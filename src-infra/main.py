@@ -41,7 +41,7 @@ min_max_avg.show(5, False)
 
 
 # output final Spark DataFrame
-output_folder = 'batch-job-processed'
+output_folder = 'processed-batch-job'
 output_dir = 's3://big-data-class1/{}/{}_processed_tr.csv'.format(output_folder, sys.argv[1].split('.')[0])
 #data_trasposed.coalesce(1).write.csv(output_dir, mode="overwrite", header=True)
 

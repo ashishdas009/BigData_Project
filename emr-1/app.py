@@ -14,6 +14,7 @@ S3_URI = 's3://{bucket}/{key}'.format(bucket=S3_BUCKET, key = S3_KEY)
 
 
 def lambda_handler(event, context):
+    print('EVENT:', event)
 
     input_bucket = event['Records'][0]['s3']['bucket']['name'] # not being used
     input_file_key = event['Records'][0]['s3']['object']['key']
