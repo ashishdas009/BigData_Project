@@ -18,8 +18,8 @@ Resources:
       CodeUri: emr-1/
       Handler: app.lambda_handler
       Runtime: python3.7
-      Layers:
-      - !Ref DataProcessingLayer
+      # Layers:
+      # - !Ref DataProcessingLayer
 
 
   # note, role requires s3 access
@@ -30,8 +30,8 @@ Resources:
       CodeUri: get-data/
       Handler: app.lambda_handler
       Runtime: python3.7
-      Layers:
-      - !Ref DataProcessingLayer
+      # Layers: -- Can't build this without sam
+      # - !Ref DataProcessingLayer
       Events:
         Schedule1:
           Type: Schedule
@@ -41,29 +41,27 @@ Resources:
 
 
 
-  DataProcessingLib:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ./src/layers/dataProcessingLib/
-      Handler: data_processing_lib.lambda_handler
-      Runtime: python3.7
+  # DataProcessingLib:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: ./src/layers/dataProcessingLib/
+  #     Handler: data_processing_lib.lambda_handler
+  #     Runtime: python3.7
 
 
-  DataProcessingLayer:
-    Type: AWS::Serverless::LayerVersion
-    DependsOn: DataProcessingLib
-    Properties:
-      Description: Lambda layer for writing additional functions for data processing
-      LayerName: DataProcessingLib
-      ContentUri: ./.aws-sam/build/DataProcessingLib
-      CompatibleRuntimes: 
-        - python3.7
-      RetentionPolicy: Delete
+  # DataProcessingLayer:
+  #   Type: AWS::Serverless::LayerVersion
+  #   DependsOn: DataProcessingLib
+  #   Properties:
+  #     Description: Lambda layer for writing additional functions for data processing
+  #     LayerName: DataProcessingLib
+  #     ContentUri: ./.aws-sam/build/DataProcessingLib
+  #     CompatibleRuntimes: 
+  #       - python3.7
+  #     RetentionPolicy: Delete
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  
 
   EMRFunction:
     Description: "None"
@@ -81,6 +79,6 @@ Outputs:
     Value: !GetAtt GetDataFunctionRole.Arn
 
 
-  DataProcessingLib:
-    Description: "Processing Layer"
-    Value: !GetAtt DataProcessingLib.Arn
+  # DataProcessingLib:
+  #   Description: "Processing Layer"
+  #   Value: !GetAtt DataProcessingLib.Arn
