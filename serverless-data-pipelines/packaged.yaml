@@ -1,0 +1,76 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'serverless-data-pipelines
+
+  Sample SAM Template for serverless-data-pipelines
+
+  '
+Globals:
+  Function:
+    Timeout: 100
+Resources:
+  EMRFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: EMRFunction
+      CodeUri: s3://big-data-class1/5a8553d517b087278d73ea3876202e62
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Layers:
+      - Ref: DataProcessingLayer
+  GetDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: GetDataFunction
+      CodeUri: s3://big-data-class1/5a8553d517b087278d73ea3876202e62
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Layers:
+      - Ref: DataProcessingLayer
+  DataProcessingLib:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://big-data-class1/619072790f07d32c57cfb9e66a7d2f05
+      Handler: data_processing_lib.lambda_handler
+      Runtime: python3.7
+  DataProcessingLayer:
+    Type: AWS::Serverless::LayerVersion
+    DependsOn: DataProcessingLib
+    Properties:
+      Description: Lambda layer for writing additional functions for data processing
+      LayerName: DataProcessingLib
+      ContentUri: s3://big-data-class1/619072790f07d32c57cfb9e66a7d2f05
+      CompatibleRuntimes:
+      - python3.7
+      RetentionPolicy: Delete
+Outputs:
+  EMRFunction:
+    Description: None
+    Value:
+      Fn::GetAtt:
+      - EMRFunction
+      - Arn
+  EMRFunctionIamRole:
+    Description: None
+    Value:
+      Fn::GetAtt:
+      - EMRFunctionRole
+      - Arn
+  GetDataFunction:
+    Description: None
+    Value:
+      Fn::GetAtt:
+      - GetDataFunction
+      - Arn
+  GetDataFunctionIamRole:
+    Description: None
+    Value:
+      Fn::GetAtt:
+      - GetDataFunctionRole
+      - Arn
+  DataProcessingLib:
+    Description: Processing Layer
+    Value:
+      Fn::GetAtt:
+      - DataProcessingLib
+      - Arn

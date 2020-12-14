@@ -8,32 +8,79 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 100
 
 Resources:
   EMRFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
     Properties:
-      CodeUri: emr_1/
+      FunctionName: EMRFunction
+      CodeUri: emr-1/
       Handler: app.lambda_handler
       Runtime: python3.7
+      Layers:
+      - !Ref DataProcessingLayer
+
+
+  # note, role requires s3 access
+  GetDataFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      FunctionName: GetDataFunction
+      CodeUri: get-data/
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Layers:
+      - !Ref DataProcessingLayer
       Events:
-        EMR:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+        Schedule1:
+          Type: Schedule
           Properties:
-            Path: /hello
-            Method: get
+            Schedule: rate(1 day)
+
+
+
+
+  DataProcessingLib:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src/layers/dataProcessingLib/
+      Handler: data_processing_lib.lambda_handler
+      Runtime: python3.7
+
+
+  DataProcessingLayer:
+    Type: AWS::Serverless::LayerVersion
+    DependsOn: DataProcessingLib
+    Properties:
+      Description: Lambda layer for writing additional functions for data processing
+      LayerName: DataProcessingLib
+      ContentUri: ./.aws-sam/build/DataProcessingLib
+      CompatibleRuntimes: 
+        - python3.7
+      RetentionPolicy: Delete
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  EMRApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+
   EMRFunction:
-    Description: "Hello World Lambda Function ARN"
+    Description: "None"
     Value: !GetAtt EMRFunction.Arn
   EMRFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
+    Description: "None"
     Value: !GetAtt EMRFunctionRole.Arn
+
+
+  GetDataFunction:
+    Description: "None"
+    Value: !GetAtt GetDataFunction.Arn
+  GetDataFunctionIamRole:
+    Description: "None"
+    Value: !GetAtt GetDataFunctionRole.Arn
+
+
+  DataProcessingLib:
+    Description: "Processing Layer"
+    Value: !GetAtt DataProcessingLib.Arn
