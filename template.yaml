@@ -57,7 +57,7 @@ Resources:
 
 
 
-
+  # TODO: Note, also need EMR access for this lambda
   EMRFunction:
     Type: AWS::Serverless::Function 
     Properties:
