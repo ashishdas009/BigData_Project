@@ -62,6 +62,8 @@ Here, we used TSNE to visualize clusters of high-dimensional temporal data of co
 
 [New York State Department of Health COVID-19 Tracker](https://coronavirus.health.ny.gov/home)
 
+[S&P 500 Intraday data (One Minute Bars)](https://www.quandl.com/databases/AS500/data)
+
 [2020 Yellow Taxi Trip Data (January - June](https://catalog.data.gov/my/dataset/2020-yellow-taxi-trip-data-january-june)
 
 [Open restaurant applications dataset](https://catalog.data.gov/dataset/open-restaurant)
