@@ -69,6 +69,8 @@ Resources:
       MemorySize: 1024
       # Layers:
       # - !Ref DataProcessingLayer
+
+      # no support for s3 trigger for pre-created bucket
       # Events: # new s3 trigger
       #   S3Event:
       #     Type: S3
