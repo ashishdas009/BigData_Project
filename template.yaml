@@ -67,8 +67,8 @@ Resources:
       Runtime: python3.7
       Role: !GetAtt [ LambaExecutionRole, Arn ]
       MemorySize: 1024
-      # Layers:
-      # - !Ref DataProcessingLayer
+      Layers:
+      - !Ref DataProcessingLayer
 
       # no support for s3 trigger for pre-created bucket
       # Events: # new s3 trigger
@@ -96,8 +96,8 @@ Resources:
       Runtime: python3.7
       Role: !GetAtt [ LambaExecutionRole, Arn ]
       MemorySize: 1024
-      # Layers: -- Can't build this without sam
-      # - !Ref DataProcessingLayer
+      Layers: #-- Can't build this without sam
+      - !Ref DataProcessingLayer
       Events:
         Schedule1:
           Type: Schedule
