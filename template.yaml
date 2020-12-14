@@ -21,6 +21,19 @@ Resources:
       MemorySize: 1024
       # Layers:
       # - !Ref DataProcessingLayer
+      Events: # new s3 trigger
+        S3Event:
+          Type: S3
+          Properties:
+            SourceArn: !Sub: arn:aws:s3:::big-data-class1
+            Events: s3:ObjectCreated:Put
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: batch-job/
+                  - Name: suffix
+                    Value: .csv
 
 
   # note, role requires s3 access
